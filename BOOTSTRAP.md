@@ -1,6 +1,6 @@
 # BOOTSTRAP: paste everything below this line into Claude Code as your first message
 
-You are my setup guide. I am Srijan, a junior at Wakeland High School in Frisco, Texas. I am on a ThinkPad, I have a Claude Pro plan, and this is a fresh Claude Code install. A friend (Aarush) runs a full version of this setup and wrote this prompt. Your job is to take me from a bare install to a working school system in one session, doing every step you can do yourself and telling me exactly what to click for the steps only I can do.
+You are my setup guide. I am Srijan, a junior at Wakeland High School in Frisco, Texas. I am on a ThinkPad, I have a Claude Pro plan, and this is a fresh Claude Code install. A friend (Aarush) runs a full version of this setup on a Mac and wrote this prompt. Your job is to take me from a bare install to a working school system in one session: install every app you can yourself, tell me exactly what to click for the parts only I can do, verify each step, then interview me and build my notes.
 
 ## How to run this session
 
@@ -8,23 +8,38 @@ You are my setup guide. I am Srijan, a junior at Wakeland High School in Frisco,
 - Inside a phase: do your part first, then tell me my part as numbered clicks ("Open X. Click Y. Pick Z."), then run a check to prove it worked. Do not move on until the check passes or I say skip.
 - When something is on me, end your message with exactly what to type back: usually "done" or "skip".
 - If a check fails twice, do not loop. Write the failure to the log and move on. We fix it at the end.
-- Keep a log at ~/school/SETUP_LOG.md: one line per phase, PASS / SKIP / FAIL, plus anything to fix later. Create it in Phase 1.
+- Keep a log at ~/school/SETUP_LOG.md: one line per phase and per app, PASS / SKIP / FAIL, plus anything to fix later. Create it in Phase 1.
 - Short messages. I am reading this in a terminal.
 - I am on Pro. Do not spawn subagents. Do not read files you do not need. If this chat gets long, tell me to run /compact.
 - Never run anything that deletes, force pushes, or wipes. Never sign my school Google account into anything Claude. School account lives in Chrome only. Personal Gmail is my Claude login.
 
 ## Phase 1: Environment
 
-Your part: detect the OS and shell (Windows native, Git Bash, WSL, or Linux), then check `git --version`, `python3 --version`, `node --version`, `claude --version`, and run `claude doctor`. Create ~/school and ~/school/SETUP_LOG.md.
+Your part: detect the OS and shell (Windows native, Git Bash, WSL, or Linux distro), then check `git --version`, `python3 --version`, `node --version`, `claude --version`, and run `claude doctor`. On Windows also check `winget --version`. On Linux check which package manager (apt, dnf, pacman) and whether snap or flatpak exist. Create ~/school and ~/school/SETUP_LOG.md.
 My part: run `/status` and tell you what plan and account it shows (you cannot run slash commands).
-Check: git and python3 present, claude doctor clean, account is my personal email on Pro. Note anything missing in the log; install git or python3 if missing and tell me how if you cannot.
+Check: claude doctor clean, account is my personal email on Pro, a package manager works. Log it.
 
-## Phase 2: Terminal (Ghostty)
+## Phase 2: Apps (Aarush's stack, translated to my laptop)
 
-Ghostty is the terminal Aarush uses. It is macOS and Linux only.
-- If I am on Linux: tell me the install command for my distro from https://ghostty.org/docs/install and how to set it as default.
-- If I am on Windows: say plainly that Ghostty does not run on Windows yet, and that Windows Terminal is the right call. Tell me how to make Windows Terminal open Git Bash (or WSL Ubuntu) as its default profile so `claude` launches there. Settings > Startup > Default profile.
-Check: I confirm which terminal I will use from now on. Log it.
+This is the full list of apps Aarush runs with Claude on his Mac and what I get instead. Install them in this order. For each app: try the install command yourself first; if the package id is not found or the command fails, give me the official download link and the exact clicks, then wait for "done". Log each app PASS / SKIP / FAIL.
+
+| # | Aarush's Mac | Mine | How |
+|---|---|---|---|
+| 1 | Git | Git | Windows: `winget install --id Git.Git -e`. Linux: `sudo apt install git` (or dnf/pacman). |
+| 2 | Python 3.12 | Python 3.12 | Windows: `winget install --id Python.Python.3.12 -e`. Linux: `sudo apt install python3 python3-pip`. |
+| 3 | Node | Node LTS | Windows: `winget install --id OpenJS.NodeJS.LTS -e`. Linux: `sudo apt install nodejs npm` or nvm. |
+| 4 | GitHub CLI | gh | Windows: `winget install --id GitHub.cli -e`. Linux: `sudo apt install gh`. Then tell me to run `gh auth login` myself (browser login). |
+| 5 | Google Chrome | Google Chrome | Windows: `winget install --id Google.Chrome -e`. Linux: download the .deb/.rpm from https://www.google.com/chrome and install it. |
+| 6 | Ghostty (terminal) | Windows: **Windows Terminal** (Ghostty has no Windows build, only an unofficial fork, skip it). Linux: **Ghostty**. | Windows: `winget install --id Microsoft.WindowsTerminal -e`, then tell me: Settings > Startup > Default profile = Git Bash (or Ubuntu if WSL) and Default terminal application = Windows Terminal. Linux: follow https://ghostty.org/docs/install for my distro. |
+| 7 | Claude desktop app | Claude desktop app | Windows: `winget install --id Anthropic.Claude -e`; if not found, https://claude.ai/download. Linux: official beta, Ubuntu 22.04+ / Debian 12+ only, follow https://code.claude.com/docs/en/desktop-linux (apt repo). Other distros: SKIP, the browser app at claude.ai does the same job. Then: sign in with my personal account. |
+| 8 | Obsidian | Obsidian | Windows: `winget install --id Obsidian.Obsidian -e`. Linux: snap `sudo snap install obsidian --classic`, or the AppImage/.deb from https://obsidian.md/download. Then tell me: open Obsidian > Open folder as vault > pick `~/school/Notes`. That folder is where you write my notes, so I can read them there. |
+| 9 | Willow Voice (dictation, Aarush talks to Claude instead of typing) | Windows: **Willow Voice** (it has an official Windows app). Linux: no Willow; try Wispr Flow if it has a Linux build when I check, else SKIP and I type. | Windows: download from https://willowvoice.com (Students page: https://willowvoice.com/students for the student plan). Install, open, allow Microphone and Input/typing permissions, learn the hotkey it shows. Test: tell me to dictate one sentence into this terminal. |
+| 10 | Granola (records classes) | Windows: **Granola**. Linux: none, SKIP. | Decided in Phase 7, not here. Just note it in the log as "pending Phase 7". |
+| 11 | Grammarly | Windows: Grammarly desktop. Linux: the Grammarly Chrome extension only. | Optional. Windows: `winget install --id Grammarly.Grammarly -e`; if not found, https://www.grammarly.com/desktop/windows. Ask me yes/no first; skip if I say no. |
+| 12 | Ollama (local models) | Ollama | Optional and only if the ThinkPad has 16 GB RAM or more (check first). Windows: `winget install --id Ollama.Ollama -e`. Linux: `curl -fsSL https://ollama.com/install.sh | sh`. If RAM is under 16 GB, SKIP and say why. |
+
+Rules for this phase: one app per message, run the command, show me the result, then the next. Do not install anything not on this list. If winget asks me to accept terms, tell me what to type. Restart the terminal at the end of this phase if PATH changed (tell me to type `exit`, reopen, run `claude --resume` and pick this session, then "continue phase 3").
+Check: `git --version`, `python3 --version`, `node --version`, `gh --version` all print, Chrome and Obsidian open, Willow Voice dictated one sentence. Log it.
 
 ## Phase 3: Starter pack (rules, skills, hooks)
 
@@ -36,19 +51,19 @@ bash ~/claude-starter/install.sh
 Then read ~/claude-starter/SETUP.md yourself so you know what is in the pack, and show me the list of what got installed: CLAUDE.md, 5 skills (study-drill, essay-rubric, bpa-judge, canvas-week, council), 2 hooks (notes index, command guard), bypass permissions default, ~/school/Notes.
 Check: `ls ~/.claude/skills` shows the 5 skills and ~/.claude/CLAUDE.md exists. Tell me the hooks only turn on after a restart and that we restart in the last phase.
 
-## Phase 4: Claude desktop app
+## Phase 4: Claude desktop app sign in
 
-My part: download the Claude desktop app from https://claude.ai/download (Windows or Linux build), install, sign in with my personal Claude account. This is where I will use chat, Projects, and see connectors. Tell me where the Settings menu is once it is open.
-Check: I type "done" when I am signed in. Log it.
+If Phase 2 installed it: tell me to open it, sign in with my personal Claude account, and where Settings is. This is where chat, Projects, and connectors live. If it was skipped on Linux: tell me to sign in at https://claude.ai in Chrome instead.
+Check: I type "done". Log it.
 
 ## Phase 5: Claude in Chrome
 
 My part, numbered:
-1. Open Chrome. Make sure my personal Google account is the Chrome profile I use for Claude, and my school Google account is also signed into that Chrome (for Canvas and school Docs), or is in a second profile. Ask me which and note it in CLAUDE.md later.
+1. Open Chrome. My personal Google account is the Chrome profile I use for Claude. My school Google account is also signed into Chrome (for Canvas and school Docs), either in the same profile or a second one. Ask me which and remember it for CLAUDE.md.
 2. Install the "Claude" extension by Anthropic from the Chrome Web Store. Sign in to it with my personal Claude account.
 3. Pin it to the toolbar.
-Your part: tell me to type "done", then run `/chrome` instructions: I type `/chrome` in this chat and turn it on.
-Check: once on, open a new tab to https://friscoisd.instructure.com and tell me what you see on my Canvas dashboard. Close the tab after. If the extension is not connected, tell me how to reconnect it. Log it.
+Your part: after "done", tell me to type `/chrome` in this chat and turn it on.
+Check: open a new tab to https://friscoisd.instructure.com and tell me what is on my Canvas dashboard. Close the tab after. If the extension is not connected, tell me how to reconnect it. Log it.
 
 ## Phase 6: Connectors
 
@@ -57,32 +72,32 @@ My part, numbered: open https://claude.ai/settings/connectors on my PERSONAL acc
 2. Google Drive (personal)
 3. Gmail (personal)
 4. Granola, if I decide to use it in Phase 7 (come back for this one)
-5. Notion, only if I already use Notion. Otherwise skip, we use markdown notes.
+5. Notion, only if I already use Notion. Otherwise skip, we use markdown notes in Obsidian.
 Say explicitly: do NOT connect the school Google account here.
-Your part: after I type "done", tell me to type `/mcp` and read you the list. Then prove it works: list my calendar events for the next 7 days and the 5 most recent files in my Drive.
+Your part: after "done", tell me to type `/mcp` and read you the list. Then prove it works: list my calendar events for the next 7 days and the 5 most recent files in my Drive.
 Check: both calls return real data. Log which connectors are live.
 
 ## Phase 7: Granola (class recordings)
 
-Explain in 4 lines what Granola is (a notes app that records a meeting or a lecture, transcribes it, and writes notes) and how Aarush uses it: every class with a lecture gets recorded, then Claude drills from the transcript. Then ask me one question: do I want this, yes or no.
-- Yes: tell me to install it from https://granola.ai (Windows and Mac builds exist, Linux does not), sign in, and go back to Phase 6 step 4 to connect it. Then add a line to CLAUDE.md under School: "Granola first: before drilling for a class, pull the latest Granola transcript for it."
-- No: log SKIP and move on.
+Explain in 4 lines what Granola is (a notes app that records a meeting or a lecture from the laptop's audio, transcribes it, and writes notes) and how Aarush uses it: every class with a lecture gets recorded, then Claude drills from the transcript. Then ask me one question: do I want this, yes or no.
+- Yes (Windows only): download from https://granola.ai/download, install, sign in with my personal Google account, then go back to Phase 6 step 4 and connect it. Add a line to CLAUDE.md under School: "Granola first: before drilling for a class, pull the latest Granola transcript for it." Show me the line, I say save, you Edit it in.
+- No, or Linux: log SKIP and move on.
 Check: if yes, `/mcp` shows Granola and you can list my meetings.
 
 ## Phase 8: Plugins
 
 My part: type `/plugin`. Go to Discover (or Browse). The official Anthropic marketplace is already there. Install:
-1. The Anthropic skills pack (Docs, PDF, PowerPoint, Excel). These are what let you make and read real files for school.
-2. Anything called "frontend design" or "web design" if it is there (for BPA slides mockups).
-3. Nothing else for now. One at a time; each one is more for Claude to read every session.
+1. The Anthropic skills pack (Docs, PDF, PowerPoint, Excel). These let you make and read real files for school.
+2. Anything called "frontend design" or "web design" if it is there (for BPA slide mockups).
+3. Nothing else for now. Each one is more for Claude to read every session.
 Tell me to type "done" and paste what got installed. Log it.
 Check: type `/` and confirm the new skills show in the list.
 
 ## Phase 9: Interview and CLAUDE.md
 
-Read ~/.claude/CLAUDE.md. The ABOUT ME section has blanks. Interview me, one question at a time, 8 to 12 questions, until the blanks are filled: my 8 classes with teacher names and A/B period, which classes have tests soon, my BPA team (who, roles, next deadline), how I study best, when I usually do homework, anything you must never do. Stop when my answers stop changing what you would write.
+Read ~/.claude/CLAUDE.md. The ABOUT ME section has blanks. Interview me, one question at a time, 8 to 12 questions, until the blanks are filled: my 8 classes with teacher names and A/B period, which classes have tests soon, my BPA team (who, roles, next deadline), how I study best, when I usually do homework, which Chrome profile has the school account, whether I dictate with Willow or type, anything you must never do. Stop when my answers stop changing what you would write.
 Then: rewrite ABOUT ME with what you learned. Show me the full new section. I say "save", you save it with Edit (not by overwriting the file).
-Then: create one note per class in ~/school/Notes/<Class>.md plus BPA.md, each with `## Current state` and `## Log` headings and whatever I told you. Show me `ls ~/school/Notes`.
+Then: create one note per class in ~/school/Notes/<Class>.md plus BPA.md, each with `## Current state` and `## Log` headings and whatever I told you. Show me `ls ~/school/Notes` and tell me to look at them in Obsidian.
 Check: CLAUDE.md has no blanks left in ABOUT ME. Log it.
 
 ## Phase 10: Memory
@@ -91,8 +106,8 @@ Explain in 3 lines: starting a message with `#` tells you to remember something 
 
 ## Phase 11: Restart and first real job
 
-1. Show me the SETUP_LOG.md with every PASS / SKIP / FAIL.
-2. Tell me to type `/exit`, open my terminal again, `cd ~/school`, and run `claude`. Hooks turn on now.
+1. Show me SETUP_LOG.md with every PASS / SKIP / FAIL, apps included.
+2. Tell me to type `/exit`, open my terminal (Windows Terminal or Ghostty), `cd ~/school`, and run `claude`. Hooks turn on now.
 3. Tell me the first message to paste in the new session, exactly this:
    "Read the notes index above and CLAUDE.md. Run /canvas-week. Then tell me the 3 things you would do for me first this week, and start on the first one."
 4. If anything is FAIL in the log, give me a one line fix for each I can try tomorrow, and say "text Aarush" for anything you could not solve.

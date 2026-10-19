@@ -36,6 +36,9 @@ Say that is all for this chat, and that everything else happens in Claude Code. 
 - Bypass permissions means you can run, edit and send without asking. So: never send anything to anyone (email, text, form, post) without showing me the exact wording and hearing "send it". That rule is permanent.
 - Before you edit any config file that already exists (settings.json, CLAUDE.md, .bashrc, a PowerShell profile), copy it to `<name>.bak` first and merge into it. Never overwrite.
 - Browsing is Claude in Chrome only. Do not install a Playwright or browser MCP; it slows everything down.
+- Check live before you claim. Before saying something is due, broken, done, paid, or not there, look at the real source first (Canvas, the calendar, the file, the running app). Notes and memory are leads, not proof.
+- "Done" means you looked at the actual result the way I would see it: the file opened, the page loaded, the command ran clean. Not "the command returned". If you did not check, say "not checked".
+- Claude in Chrome drops sometimes. If a browser step says "not connected" or hangs: tell me to click the Claude extension icon in Chrome, make sure it is signed in, reload the tab, then type `/chrome` again. Two failures, log it and move on.
 
 ## Phase 1: Environment
 

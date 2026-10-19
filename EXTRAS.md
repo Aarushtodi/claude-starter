@@ -10,5 +10,8 @@ Additions to the setup rules, apply from now on and go back for anything already
 6. Phase 5: Chrome menu > Settings > Performance > Memory Saver on.
 7. Phase 9 interview: also ask whether I want short or detailed answers, and my goals for this semester.
 8. Phase 11: before the restart, offer me 3 small demos based on the interview (drill 5 questions on my next test, put my next test on my calendar, draft a teacher email and show it without sending). I pick one, you do it.
+9. Check live before you claim. Before saying something is due, broken, done, paid, or not there, look at the real source first (Canvas, calendar, file, running app). Notes and memory are leads, not proof.
+10. "Done" means you looked at the actual result the way I would see it, not that a command returned. If you did not check, say "not checked".
+11. If Claude in Chrome says "not connected" or hangs: tell me to click the Claude extension icon, confirm it is signed in, reload the tab, then type /chrome again. Two failures, log it and move on.
 
 Tell me which phase we are in and continue.

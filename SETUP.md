@@ -80,7 +80,12 @@ What that installs:
   - `/bpa-judge` builds the 505 plan with you or mock judges you with hard follow ups
   - `/canvas-week` reads Canvas through Chrome, lists what is due, puts tests on your calendar
   - `/council` six advisor debate for real decisions (heavy on usage, use `quick` mode)
-- 5 hooks: a notes index, a project index and a note drift check that load at session start so Claude knows where every class and project stands, a context size warning, and a guard that blocks `rm -rf`, force pushes, and other wipes even in bypass mode.
+- Hooks: a notes index, a project index and a note drift check that load at session start so Claude knows where every class and project stands, a context size warning, and a guard that blocks `rm -rf`, force pushes, and other wipes even in bypass mode.
+- A status line at the bottom of Claude Code showing the model and effort (`Sonnet 5.5 | effort medium*`), Pro friendly effort defaults (Sonnet and Opus on medium), and a model fit check: Sonnet by default, Opus only for hard essays, BPA strategy, or something broken.
+- A call-out logger: when you tell Claude it was wrong ("stupid", "not what I asked"), it logs the miss to `~/school/Projects/Claude Misses.md` before fixing. Say "misses" to review the patterns.
+- A school clock (`SCHOOL CLOCK:` line at session start) using your bell schedule and A/B days from `~/school/.config/bells.json` (Wakeland default). In class means no pings.
+- Canvas scripts in `~/.claude/bin`, all zero Claude usage: `canvas_watch` (new, moved and graded work, open ledger, every 30 minutes), `assess_watch` (Sundays, catches teacher edits to test plans, writes them to `Projects/Inbox.md`), `weak_notes` (a stub note for every grade under full points). They need a Canvas token in `~/school/.config/canvas.json`; Claude gets it from you in BOOTSTRAP Phase 8b and registers them with Task Scheduler (Windows) or cron (Linux). Alerts are desktop notifications.
+- `unblock.py` and the `BLOCKED-BY: <id>` convention for anything you are waiting on, tracked in `Projects/Blockers.md`.
 - Bypass permissions set as the default (so plain `claude` works, no flag needed).
 - `~/school/` as an Obsidian vault: Home.md and Start Here.md, Projects/ (BPA, Inbox, Blockers, Miscellaneous Notes), Notes/, Classes/, Daily/, Drafts/, Council/, Templates/, plus two more SessionStart hooks (project index, note drift).
 

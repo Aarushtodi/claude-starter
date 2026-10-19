@@ -5,6 +5,12 @@
         "hooks": [
           {
             "type": "command",
+            "command": "python3 \"$HOME/.claude/bin/school_clock.py\" --line 2>/dev/null || true",
+            "timeout": 5,
+            "statusMessage": "Checking the school clock..."
+          },
+          {
+            "type": "command",
             "command": "bash \"$HOME/.claude/hooks/notes_index.sh\" 2>/dev/null || true",
             "timeout": 10,
             "statusMessage": "Loading notes index..."
@@ -41,11 +47,46 @@
         "hooks": [
           {
             "type": "command",
+            "command": "python3 \"$HOME/.claude/hooks/callout_detect.py\"",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "python3 \"$HOME/.claude/hooks/model_effort_check.py\"",
+            "timeout": 5
+          },
+          {
+            "type": "command",
             "command": "python3 \"$HOME/.claude/hooks/context_size_check.py\"",
             "timeout": 5
           }
         ]
       }
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "python3 \"$HOME/.claude/hooks/statusline.py\""
+  },
+  "modelSettings": {
+    "claude-sonnet-5": {
+      "effortLevel": "medium"
+    },
+    "claude-sonnet-5-5": {
+      "effortLevel": "medium"
+    },
+    "claude-opus-5": {
+      "effortLevel": "medium"
+    },
+    "claude-opus-5-5": {
+      "effortLevel": "medium"
+    }
+  },
+  "skillOverrides": {
+    "study-drill": "on",
+    "essay-rubric": "on",
+    "bpa-judge": "on",
+    "canvas-week": "on",
+    "council": "on"
   }
 }

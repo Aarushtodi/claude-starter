@@ -75,11 +75,15 @@ Claude reads this at the start of every session. Keep it current. Propose the ex
 ## Working style
 
 - One task per session. Tell me when a chat is getting long and suggest /clear or /compact.
-- Pick the model for the job and say so in one line: Sonnet for normal school work, Opus only for hard essays, BPA strategy, or something that is broken. I am on Pro, so usage is a real limit.
+- Pick the model for the job and say so in one line (see Model rule below). I am on Pro, so usage is a real limit.
 - No subagents unless the job is genuinely big (reading 20+ files, a multi part research dive). Say when you spawn one and why.
 - Save to the vault: every decision, deadline, or thing I tell you that matters goes into the matching note as it happens, not at the end. Projects (BPA and anything else I am working on) are in ~/school/Projects, class notes in ~/school/Notes. Each save is one step: add a dated line, rewrite that note's `## Current state` block, set `updated:` in its frontmatter to today. Unsure where it goes: append `- [date] text` to ~/school/Projects/Inbox.md. Anything I am waiting on goes in ~/school/Projects/Blockers.md.
 - Project notes use this frontmatter: `type: project`, `status: active|waiting|done|archived`, `domain: school`, `updated: YYYY-MM-DD`.
-- If I call out a wrong answer: fix the thing that let it through, not just the one symptom, and add a line here so it does not repeat.
+- If I call out a wrong answer: when a CALL-OUT CHECK line shows up (the callout_detect hook), FIRST append an entry to ~/school/Projects/Claude Misses.md (date, what you said quoted, my words, why it was wrong, the fix), say "logged" in one line, THEN fix it. Fix the thing that let it through, not just the one symptom, and add a line here so it does not repeat. When I say "misses", read that note, group the patterns, and propose tighter rules.
+- Model rule: Sonnet default. Opus only for hard essays, BPA strategy, or something broken. When a MODEL/EFFORT MONITOR line shows what this chat is on, flag a mismatch in one line (for example "worth /model opus for this") and say nothing when it fits. The status line at the bottom shows `model | effort`; a `*` after the effort means it comes from my settings, not live.
+- Waiting on something (a teacher reply, a teammate, a login)? Put `BLOCKED-BY: <id>` on the line in the note and add a row to ~/school/Projects/Blockers.md. When it resolves, run `python3 ~/.claude/bin/unblock.py <id>`, then re-read the files it lists and update them. Verify the trigger first (check the thread, Canvas, the file) before asking me about a hold.
+- School clock: the SCHOOL CLOCK line at session start says if I am in class. If it says in class or lunch, no pings and no notifications, answer only what I ask. Held notifications go out after the bell by themselves.
+- Canvas automations run on their own (Task Scheduler or cron): canvas_watch (every 30 min), assess_watch (Sundays), weak_notes (daily). Lines they add to ~/school/Projects/Inbox.md starting with CANVAS PLAN CHANGED mean a teacher edited a test plan: read the diff file named in the line, put real test dates on my calendar as `TEST: <class> <topic>`, then sort the line. A new `Weak - ...` note in ~/school/Notes means I scored under full points: help me fill in what I missed. Never print or paste my Canvas token (~/school/.config/canvas.json).
 - If I am polishing a plan instead of doing the step (asking a teacher, texting a teammate), say so plainly.
 
 ## Memory

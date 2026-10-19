@@ -1,0 +1,38 @@
+{
+  "_readme": "School schedule used by school_clock.py. Default is Wakeland HS 2026-27. Times are 24 hour HH:MM, local time. Edit freely.",
+  "no_school": [
+    "2026-09-07", "2026-09-08", "2026-10-09", "2026-10-12", "2026-10-13",
+    "2026-11-23", "2026-11-24", "2026-11-25", "2026-11-26", "2026-11-27",
+    "2027-01-18", "2027-02-12", "2027-02-15",
+    "2027-03-15", "2027-03-16", "2027-03-17", "2027-03-18", "2027-03-19",
+    "2027-03-26", "2027-04-16", "2027-04-30"
+  ],
+  "no_school_ranges": [["2026-12-21", "2027-01-04"]],
+  "ab": {
+    "_note": "Each quarter restarts the A/B alternation. Every school day flips it. overrides pins a date to a letter and alternation continues from there.",
+    "quarters": [
+      {"start": "2026-08-12", "end": "2026-10-08", "first": "A"},
+      {"start": "2026-10-14", "end": "2026-12-18", "first": "B"},
+      {"start": "2027-01-05", "end": "2027-03-05", "first": "A"},
+      {"start": "2027-03-08", "end": "2027-05-14", "first": "B"}
+    ],
+    "overrides": {"2026-10-01": "B"}
+  },
+  "bells": {
+    "standard": [
+      {"label": "P1", "start": "09:00", "end": "10:33"},
+      {"label": "P2", "start": "10:39", "end": "12:13"},
+      {"label": "lunch", "start": "12:13", "end": "13:13"},
+      {"label": "P3", "start": "13:18", "end": "14:51"},
+      {"label": "P4", "start": "14:57", "end": "16:30"}
+    ],
+    "wednesday": [
+      {"label": "P1", "start": "09:00", "end": "10:26"},
+      {"label": "P2", "start": "10:31", "end": "12:03"},
+      {"label": "activity", "start": "12:03", "end": "12:28"},
+      {"label": "lunch", "start": "12:28", "end": "13:28"},
+      {"label": "P3", "start": "13:33", "end": "14:59"},
+      {"label": "P4", "start": "15:04", "end": "16:30"}
+    ]
+  }
+}

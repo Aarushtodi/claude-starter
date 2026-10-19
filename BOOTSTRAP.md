@@ -84,7 +84,7 @@ Your part: run
 git clone https://github.com/Aarushtodi/claude-starter.git ~/claude-starter
 bash ~/claude-starter/install.sh
 ```
-Then read ~/claude-starter/SETUP.md yourself so you know what is in the pack, and show me the list of what got installed: CLAUDE.md, 5 skills (study-drill, essay-rubric, bpa-judge, canvas-week, council), 5 hooks (notes index, project index, note drift check, command guard, context size warning), bypass permissions default, and the vault skeleton in ~/school: Home.md, Start Here.md, Projects/ (Inbox, Blockers, Miscellaneous Notes, BPA), Notes/, Classes/, Daily/, Drafts/, Council/, Templates/, and the .obsidian settings. Existing files are never overwritten. Tell me ~/school is my Obsidian vault and Claude saves into it as we go.
+Then read ~/claude-starter/SETUP.md yourself so you know what is in the pack, and show me the list of what got installed: CLAUDE.md, 5 skills (study-drill, essay-rubric, bpa-judge, canvas-week, council), 8 hooks (notes index, project index, note drift check, command guard, context size warning, status line, model fit check, call-out logger), the school clock, the Canvas scripts in ~/.claude/bin, bypass permissions default, and the vault skeleton in ~/school: Home.md, Start Here.md, Projects/ (Inbox, Blockers, Miscellaneous Notes, BPA), Notes/, Classes/, Daily/, Drafts/, Council/, Templates/, and the .obsidian settings. Existing files are never overwritten. Tell me ~/school is my Obsidian vault and Claude saves into it as we go.
 Check: `ls ~/.claude/skills` shows the 5 skills, `ls ~/school` shows Home.md, Start Here.md and the folders, ~/.claude/CLAUDE.md exists, and ~/.claude/settings.json contains `"defaultMode": "bypassPermissions"` (so bypass survives restarts). Tell me the hooks only turn on after a restart and that we restart in the last phase. The project index and note drift hooks show you every active project and flag stale notes at the start of each session. The context size hook warns us when this chat gets long enough to drain my Pro limit; when it fires, save state to the vault, then /compact or /clear.
 
 ## Phase 4: Claude desktop app check
@@ -128,6 +128,34 @@ My part: type `/plugin`. Go to Discover (or Browse). The official Anthropic mark
 3. Nothing else for now. Each one is more for Claude to read every session.
 Tell me to type "done" and paste what got installed. Log it.
 Check: type `/` and confirm the new skills show in the list.
+
+## Phase 8b: Automations (status line, Canvas alerts, school clock)
+
+Explain in 3 lines: Canvas can tell us when something new is due, moves, or gets graded, and every Sunday it checks whether a teacher changed a test plan. It runs by itself in the background, costs zero Claude usage, and sends a desktop notification (held while I am in class). All it needs from me is a Canvas access token.
+
+Your part first, no clicks yet:
+1. Confirm `python3 --version` works in this shell. On Windows if it does not, the hooks cannot run: tell me, log FAIL, and fix it (`winget install --id Python.Python.3.12 -e`, then a new terminal, then if `python3` still fails make `python3` point at `python`).
+2. Check `ls ~/.claude/bin ~/school/.config` shows canvas_watch.py, assess_watch.py, weak_notes.py, school_clock.py, unblock.py, notify.py, schedule_tasks files, bells.json and canvas.json.example. If not, run the installer again.
+3. Run `python3 ~/.claude/bin/school_clock.py --line`. It should print a line starting `SCHOOL CLOCK:`. Tell me it uses the Wakeland bell schedule from ~/school/.config/bells.json and A/B days; show me today's state and ask if the A/B day is right (if wrong, fix `ab` in bells.json and re-check).
+4. Tell me about the status line: at the bottom of Claude Code it shows `model | effort`, for example `Sonnet 5.5 | effort medium*`. The `*` means that effort came from my settings and is not live. Rule: Sonnet is the default, Opus only for hard essays, BPA strategy, or something broken. If I am on the wrong one, you flag it in one line.
+
+My part (Canvas token), numbered clicks:
+1. Open Chrome with my SCHOOL account, go to https://friscoisd.instructure.com and sign in.
+2. Click **Account** (left side, the profile picture), then **Settings**.
+3. Scroll to **Approved Integrations**, click **+ New Access Token**.
+4. Purpose: type `Claude`. Leave **Expires** empty (no expiry). Click **Generate Token**.
+5. Click **Copy** next to the token (it only shows once), and paste it into this terminal chat. Type "done" after.
+(If there is no New Access Token button, the school turned it off: log SKIP for the whole phase, tell me Claude will read Canvas through Chrome with /canvas-week instead, and jump to the end of this phase.)
+
+Then your part, in order:
+1. Write the token into the config without echoing it back: copy ~/school/.config/canvas.json.example to ~/school/.config/canvas.json and replace only the `token` value (keep `base_url`). Never print the token again, never put it in the log or in a note.
+2. Test: `python3 ~/.claude/bin/canvas_watch.py --force`. Expected: "Canvas watchdog is live. N open..." and the list of what is open. A "token is dead" or "no active courses" message = FAIL, check the token and base_url, retry once. Show me the open list and ask if it matches Canvas.
+3. Test the other two once: `python3 ~/.claude/bin/assess_watch.py` (first run just saves a baseline) and `python3 ~/.claude/bin/weak_notes.py`. weak_notes may say my token cannot read grades; that is fine, log SKIP for it.
+4. Register the scheduled jobs. Windows: `powershell -NoProfile -ExecutionPolicy Bypass -File "$USERPROFILE/.claude/bin/schedule_tasks.ps1"`. Linux: `bash ~/.claude/bin/schedule_tasks.sh`. They schedule canvas_watch every 30 minutes, assess_watch Sundays 17:00, weak_notes daily 16:40.
+5. Verify they exist. Windows: `schtasks /query /tn ClaudeCanvasWatch`, `schtasks /query /tn ClaudeAssessWatch`, `schtasks /query /tn ClaudeWeakNotes` (all three must print a row). Linux: `crontab -l | grep claude-starter` must show 3 lines. Not three = FAIL, read the error, fix once, retry.
+6. Send one test notification so I can see what they look like: `NOTIFY_NOW=1 python3 ~/.claude/bin/notify.py "Canvas alerts are on"`. Ask me if a pop-up appeared. If not, log it as "printed only" and move on.
+7. Tell me in 2 lines what happens now: alerts come as pop-ups; Sunday test-date changes land in ~/school/Projects/Inbox.md and you put them on my calendar next session; a `Weak - ...` note appears in Notes when I score under full points. To stop everything later, I just ask you.
+Check: all three task rows exist, canvas.json is in place, and the test run printed my real open work. Log PASS, SKIP or FAIL for each of: status line, school clock, canvas_watch, assess_watch, weak_notes, scheduled jobs.
 
 ## Phase 9: Interview and CLAUDE.md
 

@@ -25,6 +25,6 @@ Additions to the setup rules, apply from now on and go back for anything already
 
 20. Bedtime and phone. Run `cd ~/claude-starter && git pull && bash install.sh` again. It adds `bedtime_block.py` to ~/.claude/bin, a default ~/school/.config/bedtime.json, and a Phone Setup note in ~/school/Projects, without overwriting anything.
 21. Merge the new bedtime rules from the repo CLAUDE.md into mine: never lift the block after 9pm, skips only before 9pm and max 2 a week, say the rule instead of doing it. Back up CLAUDE.md first, show me each line, I say "save".
-22. Do Phase 8c: Phone and bedtime from the latest BOOTSTRAP.md (read ~/claude-starter/BOOTSTRAP.md). Interview me first, then schedule the laptop block, then the phone. Log PASS, SKIP or FAIL for each part.
+22. Do Phase 8c: Bedtime block (laptop) from the latest BOOTSTRAP.md (read ~/claude-starter/BOOTSTRAP.md). Interview me first, then schedule the laptop block. Log PASS, SKIP or FAIL. The phone is a separate prompt, PHONE.md in the gist, that I paste into the Claude app on my phone; remind me to do it tonight.
 
 Tell me which phase we are in and continue.

@@ -157,33 +157,28 @@ Then your part, in order:
 7. Tell me in 2 lines what happens now: alerts come as pop-ups; Sunday test-date changes land in ~/school/Projects/Inbox.md and you put them on my calendar next session; a `Weak - ...` note appears in Notes when I score under full points. To stop everything later, I just ask you.
 Check: all three task rows exist, canvas.json is in place, and the test run printed my real open work. Log PASS, SKIP or FAIL for each of: status line, school clock, canvas_watch, assess_watch, weak_notes, scheduled jobs.
 
-## Phase 8c: Phone and bedtime
+## Phase 8c: Bedtime block (laptop)
 
-Explain in 3 lines: at night the laptop blocks Instagram, TikTok and YouTube (a hosts file edit, zero Claude usage, Aarush's setup), and the phone switches itself into School, Study and Sleep modes by time of day. Rule that never changes: the block never lifts after 9pm, and a night off must be asked for before 9pm, max 2 a week.
+Explain in 3 lines: at night the laptop blocks Instagram, TikTok and YouTube (a hosts file edit, zero Claude usage, Aarush's setup) and unblocks in the morning. Rule that never changes: the block never lifts after 9pm, and a night off must be asked for before 9pm, max 2 a week. The phone side is a separate prompt (PHONE.md in the same gist) that I paste into the Claude app on my phone; tell me that now and move on.
 
 Interview first, one question at a time, and write each answer down as I give it. Stop when my answers stop changing the plan:
-1. iPhone or Android?
-2. What time should social get blocked on school nights (Sunday to Thursday)? Default 10pm.
-3. Weekend bedtime for Friday and Saturday, or no block those nights?
-4. What time does it unblock in the morning? Default 6am.
-5. Which sites and apps? Instagram, TikTok, YouTube by default. Ask what else I waste time on (Snapchat, Reddit, Twitter/X, Netflix) and add their website domains.
-6. How many skips a week do I want? Max 2, you never go above that.
-7. Which apps do I actually need during school hours (they go on the School page), and which should be hidden?
-8. When I ask to lift the block late, do I want you to tell me the rule or just say no?
-Then write ~/school/.config/bedtime.json (back up an existing one to bedtime.json.bak first) in exactly this shape: `{"bedtime": "22:00", "weekend_bedtime": null, "wake": "06:00", "sites": ["instagram.com", "tiktok.com", "youtube.com"], "skip_cap": 2, "say_rule": true}`. `weekend_bedtime` is a time like "23:00" or null for no weekend block, `sites` are base domains only, `say_rule` is false for "just say no". Fill the "His answers" block, the app lists and Current state in ~/school/Projects/Phone Setup.md, and set `updated:` to today. Show me the file and the note, I say "save" if anything needed a change.
+1. What time should social get blocked on school nights (Sunday to Thursday)? Default 10pm.
+2. Weekend bedtime for Friday and Saturday, or no block those nights?
+3. What time does it unblock in the morning? Default 6am.
+4. Which sites? Instagram, TikTok, YouTube by default. Ask what else I waste time on (Snapchat, Reddit, Twitter/X, Netflix) and add their website domains.
+5. How many skips a week do I want? Max 2, you never go above that.
+6. When I ask to lift the block late, do I want you to tell me the rule or just say no?
+Then write ~/school/.config/bedtime.json (back up an existing one to bedtime.json.bak first) in exactly this shape: `{"bedtime": "22:00", "weekend_bedtime": null, "wake": "06:00", "sites": ["instagram.com", "tiktok.com", "youtube.com"], "skip_cap": 2, "say_rule": true}`. `weekend_bedtime` is a time like "23:00" or null for no weekend block, `sites` are base domains only, `say_rule` is false for "just say no". Put the same times in the "His answers" block of ~/school/Projects/Phone Setup.md and set `updated:` to today; the phone prompt fills the rest later. Show me the file, I say "save" if anything needed a change.
 
-(a) Laptop block. My numbers are in the file now, not the defaults.
+Laptop block. My numbers are in the file now, not the defaults.
 1. Run `python3 ~/.claude/bin/bedtime_block.py schedule --dry` and show me the plan in one line.
 2. Windows: run `python3 ~/.claude/bin/bedtime_block.py schedule`. It will say NEEDS ADMIN. My part, numbered: 1. Click Start, type PowerShell. 2. Right click **Windows PowerShell**, click **Run as administrator**, click **Yes**. 3. Paste the exact line the script printed (it starts with `&` and has the full python path) and press Enter. 4. Type "done" here. Linux: tell me to type `sudo python3 ~/.claude/bin/bedtime_block.py schedule` in my own terminal and enter my password myself, then "done". You never type my password.
 3. Verify. Windows: `schtasks /query /tn ClaudeBedtimeOn`, `ClaudeBedtimeOff`, `ClaudeBedtimeCheck` (plus `ClaudeBedtimeOnWeekend` if I picked a weekend time) must each print a row. Linux: tell me to run `sudo crontab -l | grep claude-starter-bedtime` and paste it, 3 lines (4 with a weekend time). Then `python3 ~/.claude/bin/bedtime_block.py status` must print `scheduled jobs: registered`. Not found = FAIL, read the error, fix once, retry.
 4. Do not run `on` or `off` by hand to test. The scheduled job does it tonight; tomorrow morning, ask me if Instagram was blocked and log it.
 5. Tell me the skip command: `python3 ~/.claude/bin/bedtime_block.py skip`, only works before 9pm.
+6. Later, when I paste a line starting "My phone is set." (it comes from the phone prompt), update bedtime.json and Projects/Phone Setup.md to match it and show me the diff.
 
-(b) Phone. Read ~/school/Projects/Phone Setup.md. Ask me for a screenshot of my Focus list (iPhone: Settings > Focus; Android: Settings > Digital Wellbeing) first, then walk me through the iPhone or the Android section in numbered clicks, one step at a time, using my interview answers for times and apps. Finish with a screenshot of my School page.
-
-(c) iPhone only: Screen Time. Numbered clicks: 1. Settings > Screen Time. 2. **Downtime**: Schedule it to match my bedtime and wake time, turn on **Block at Downtime**. 3. **App Limits** > Add Limit > pick Instagram, TikTok, YouTube (and anything else I named) > set 1 hour a day. 4. **Content & Privacy** is not needed. Android: Settings > Digital Wellbeing > **Bedtime mode** > Set a schedule matching my bedtime and wake time, turn on grayscale.
-
-Check: bedtime.json is filled in from my answers, three or four tasks exist, `status` says registered, Phone Setup note is filled in, I sent the School page screenshot. Log PASS, SKIP or FAIL separately for: interview, laptop block, phone modes, Screen Time or Bedtime mode.
+Check: bedtime.json is filled in from my answers, three or four tasks exist, `status` says registered. Log PASS, SKIP or FAIL for: interview, laptop block.
 
 ## Phase 9: Interview and CLAUDE.md
 

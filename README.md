@@ -8,4 +8,4 @@ Claude Code setup for a high school student on a Pro plan: rules file, 5 school 
 
 Or skip all of that: paste `BOOTSTRAP.md` into Claude as your first message and it does every step with you.
 
-Files: `BOOTSTRAP.md` (the one paste setup), `EXTRAS.md` (catch-up paste for a session already running), `PHONE.md` (paste into the Claude app on your phone: Focus modes, Screen Time, done last), `SETUP.md` (manual version and reference), `CLAUDE.md` (the rules file), `install.sh`, `skills/`, `hooks/`, `bin/`, `vault/`.
+Files: `BOOTSTRAP.md` (the one paste setup), `EXTRAS.md` (catch-up paste for a session already running), `PHONE.md` (paste into the Claude app on your phone: Focus modes, Screen Time, done last), `OBSIDIAN.md` (standalone Obsidian walkthrough), `PLAYWRIGHT.md` (browser scripts, Playwright the library, not the MCP), `SETUP.md` (manual version and reference), `CLAUDE.md` (the rules file), `install.sh`, `skills/`, `hooks/`, `bin/`, `vault/`.

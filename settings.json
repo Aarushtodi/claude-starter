@@ -81,12 +81,5 @@
     "claude-opus-5-5": {
       "effortLevel": "medium"
     }
-  },
-  "skillOverrides": {
-    "study-drill": "on",
-    "essay-rubric": "on",
-    "bpa-judge": "on",
-    "canvas-week": "on",
-    "council": "on"
   }
 }

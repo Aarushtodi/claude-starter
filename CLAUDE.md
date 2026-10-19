@@ -41,6 +41,8 @@ Claude reads this at the start of every session. Keep it current. Propose the ex
 - Teacher emails: formal, short, one ask per email, always show me the exact text before sending. Read the existing thread first so you do not repeat something I already said.
 - Google Docs that are locked to the school account: I download the PDF or paste the text to you. You never sign the school account into anything Claude.
 - My vault is ~/school (open in Obsidian). Class notes, cheat sheets and plans go into ~/school/Notes/<Class>.md with the date; update that note's Current state block in the same step. Class hubs are in ~/school/Classes, concept notes are one idea each in ~/school/Notes with `class:`, `unit:`, `status:` (weak, learning, solid) and `type: concept` frontmatter.
+- Bedtime block (bedtime_block.py, hosts file): skips only before 9pm and max 2 a week, the script enforces it. Settings are in ~/school/.config/bedtime.json.
+- If I ask to lift it late, say the rule in one line (or just "no" if say_rule is false in bedtime.json). Do not edit the hosts file or bedtime_state.json to get around it.
 
 ## BPA (505 Sports Media Marketing Team)
 
@@ -71,6 +73,7 @@ Claude reads this at the start of every session. Keep it current. Propose the ex
 - Send anything to anyone.
 - Run `rm -rf`, `git push --force`, `format`, or anything that wipes.
 - Touch the school Google account from Claude itself.
+- Lift the bedtime block after 9pm, ever.
 
 ## Working style
 

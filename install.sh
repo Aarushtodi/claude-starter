@@ -34,7 +34,7 @@ echo "    hooks: notes_index.sh, project_index.sh, note_drift.py, guard.py, cont
 # 3b. Scripts (school clock, Canvas watchers, weak notes, unblock, notifier, task scheduler setup)
 cp "$HERE"/bin/* "$CL/bin/"
 chmod +x "$CL"/bin/*.py "$CL"/bin/*.sh 2>/dev/null || true
-echo "    bin: school_clock, canvas_watch, assess_watch, weak_notes, unblock, notify, schedule_tasks"
+echo "    bin: school_clock, canvas_watch, assess_watch, weak_notes, unblock, notify, schedule_tasks, bedtime_block"
 
 # 4. settings.json: merge hooks in, keep whatever is already there
 python3 - "$CL/settings.json" "$HERE/settings.json" <<'EOF'
@@ -86,6 +86,20 @@ mkdir -p "$HOME/school"/{Projects,Notes,Classes,Daily,Drafts,Council,Templates}
 echo "    vault: ~/school is the Obsidian vault ($added files added, $kept already there and left alone)"
 # 5b. Config files: real bells.json by default, canvas.json.example for the token. Never overwritten (the loop above skips existing files).
 [ -f "$HOME/school/.config/bells.json" ] && echo "    config: ~/school/.config/bells.json (Wakeland bell schedule + A/B days), canvas.json.example, README.md"
+# 5c. Bedtime config: defaults until the Phase 8c interview fills in his numbers. Never overwritten.
+if [ ! -f "$HOME/school/.config/bedtime.json" ]; then
+  cat > "$HOME/school/.config/bedtime.json" <<'BED'
+{
+  "bedtime": "22:00",
+  "weekend_bedtime": null,
+  "wake": "06:00",
+  "sites": ["instagram.com", "tiktok.com", "youtube.com"],
+  "skip_cap": 2,
+  "say_rule": true
+}
+BED
+fi
+echo "    bedtime: ~/school/.config/bedtime.json (default 22:00 Sun to Thu, off at 06:00; BOOTSTRAP Phase 8c sets the real numbers), Projects/Phone Setup.md"
 echo "    folders: Projects, Notes, Classes, Daily, Drafts, Council, Templates, .obsidian"
 
 echo

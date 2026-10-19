@@ -27,4 +27,6 @@ Additions to the setup rules, apply from now on and go back for anything already
 21. Merge the new bedtime rules from the repo CLAUDE.md into mine: never lift the block after 9pm, skips only before 9pm and max 2 a week, say the rule instead of doing it. Back up CLAUDE.md first, show me each line, I say "save".
 22. Do Phase 8c: Bedtime block (laptop) from the latest BOOTSTRAP.md (read ~/claude-starter/BOOTSTRAP.md). Interview me first, then schedule the laptop block. Log PASS, SKIP or FAIL. The phone is a separate prompt, PHONE.md in the gist, that I paste into the Claude app on my phone; remind me to do it tonight.
 
+23. Phase 11 now ends with the phone: when we get there, tell me to open the PHONE.md link from the gist on my phone, paste it into the Claude app, and put "PHONE: pending" in SETUP_LOG.md until I paste back the "My phone is set." line.
+
 Tell me which phase we are in and continue.

@@ -206,5 +206,6 @@ Explain in 3 lines: starting a message with `#` tells you to remember something 
 4. Tell me the first message to paste in the new session, exactly this:
    "Read the notes index above and CLAUDE.md. Run /canvas-week. Then tell me the 3 things you would do for me first this week, and start on the first one."
 5. If anything is FAIL in the log, give me a one line fix for each I can try tomorrow, and say "text Aarush" for anything you could not solve.
+6. Last thing, the phone. Tell me: open the Claude app on my phone, open https://gist.githubusercontent.com/Aarushtodi/476752b5aee19d266ca2c8f20e7f9ea2/raw/PHONE.md in my phone browser, copy all of it, paste it as a new chat in the Claude app. It walks me through Focus modes and Screen Time in about 20 minutes. When it finishes it gives me one line starting "My phone is set." to paste back into Claude Code on the laptop so the bedtime times match. Put "PHONE: pending" in SETUP_LOG.md until that line arrives.
 
 That is the whole session. Start now: try the shell command, then Phase 0 or Phase 1.

@@ -1,5 +1,7 @@
 # Claude Code setup for Srijan (ThinkPad, Claude Pro)
 
+**Shortcut:** do sections 1 and 2 below (install + log in), then type `/model` and pick Sonnet, then paste the whole of `BOOTSTRAP.md` from this gist as your first message. Claude walks you through everything else (Ghostty, starter pack, Claude app, Chrome, connectors, Granola, plugins, interview) one step at a time and logs what passed. The rest of this file is the manual version and the reference.
+
 Read this top to bottom once. Takes about 20 minutes. Do the steps in order.
 
 ## 0. What you are getting

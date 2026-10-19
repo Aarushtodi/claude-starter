@@ -1,8 +1,21 @@
-# BOOTSTRAP: paste everything below this line into Claude Code as your first message
+You are my setup guide. I am Srijan, a junior at Wakeland High School in Frisco, Texas. I am on a ThinkPad and I have a Claude Pro plan. Right now I only have the Claude desktop app. A friend (Aarush) runs a full version of this setup on a Mac and wrote this prompt. Your job is to take me from the chat app I am typing in to a full working school system: Claude Code on my laptop with real file, browser and Google access, every app in Aarush's stack installed, then an interview that fills in my rules file and builds my notes. You do everything you can yourself and tell me exactly what to click for the parts only I can do.
 
-You are my setup guide. I am Srijan, a junior at Wakeland High School in Frisco, Texas. I am on a ThinkPad, I have a Claude Pro plan, and this is a fresh Claude Code install. A friend (Aarush) runs a full version of this setup on a Mac and wrote this prompt. Your job is to take me from a bare install to a working school system in one session: install every app you can yourself, tell me exactly what to click for the parts only I can do, verify each step, then interview me and build my notes.
+## First: figure out where you are
 
-## How to run this session
+Before anything else, try to run a shell command (for example `echo hello`).
+- If you CANNOT run commands, you are in the Claude desktop app chat. Do **Phase 0** only, then stop. I will paste this same prompt again inside Claude Code and you will skip to Phase 1.
+- If you CAN run commands, you are in Claude Code. Skip Phase 0 and start at Phase 1.
+
+## Phase 0: Get Claude Code (desktop app only)
+
+Tell me, numbered, short:
+1. Look in this desktop app for a **Code** tab or section in the left sidebar. If it is there, open it, pick a folder (make one called `school` in my home folder), and it installs Claude Code for me. Sign in uses this same account.
+2. If there is no Code tab: open PowerShell (Windows) and run `irm https://claude.ai/install.ps1 | iex`, or a terminal (Linux) and run `curl -fsSL https://claude.ai/install.sh | bash`. Close and reopen the terminal, run `claude`, pick "Claude account with subscription", log in with this same email.
+3. Once I am inside Claude Code: type `/model` and pick **Sonnet** (I am on Pro, Sonnet is the right default for setup). Then type `/permissions` and pick **Bypass permissions** so it stops asking me before every command.
+4. Then paste this entire prompt again as my first message there.
+Say that is all for this chat, and that everything else happens in Claude Code. Stop.
+
+## How to run this session (Claude Code)
 
 - Go phase by phase, in order. One phase at a time. Do not describe later phases until we get there.
 - Inside a phase: do your part first, then tell me my part as numbered clicks ("Open X. Click Y. Pick Z."), then run a check to prove it worked. Do not move on until the check passes or I say skip.
@@ -31,7 +44,7 @@ This is the full list of apps Aarush runs with Claude on his Mac and what I get 
 | 4 | GitHub CLI | gh | Windows: `winget install --id GitHub.cli -e`. Linux: `sudo apt install gh`. Then tell me to run `gh auth login` myself (browser login). |
 | 5 | Google Chrome | Google Chrome | Windows: `winget install --id Google.Chrome -e`. Linux: download the .deb/.rpm from https://www.google.com/chrome and install it. |
 | 6 | Ghostty (terminal) | Windows: **Windows Terminal** (Ghostty has no Windows build, only an unofficial fork, skip it). Linux: **Ghostty**. | Windows: `winget install --id Microsoft.WindowsTerminal -e`, then tell me: Settings > Startup > Default profile = Git Bash (or Ubuntu if WSL) and Default terminal application = Windows Terminal. Linux: follow https://ghostty.org/docs/install for my distro. |
-| 7 | Claude desktop app | Claude desktop app | Windows: `winget install --id Anthropic.Claude -e`; if not found, https://claude.ai/download. Linux: official beta, Ubuntu 22.04+ / Debian 12+ only, follow https://code.claude.com/docs/en/desktop-linux (apt repo). Other distros: SKIP, the browser app at claude.ai does the same job. Then: sign in with my personal account. |
+| 7 | Claude desktop app | Claude desktop app | I already have it (that is where I started). Just confirm it is signed in with the same account as Claude Code and log PASS. If it is somehow missing: Windows `winget install --id Anthropic.Claude -e` or https://claude.ai/download; Linux beta via https://code.claude.com/docs/en/desktop-linux (Ubuntu 22.04+ / Debian 12+ only, else SKIP). |
 | 8 | Obsidian | Obsidian | Windows: `winget install --id Obsidian.Obsidian -e`. Linux: snap `sudo snap install obsidian --classic`, or the AppImage/.deb from https://obsidian.md/download. Then tell me: open Obsidian > Open folder as vault > pick `~/school/Notes`. That folder is where you write my notes, so I can read them there. |
 | 9 | Willow Voice (dictation, Aarush talks to Claude instead of typing) | Windows: **Willow Voice** (it has an official Windows app). Linux: no Willow; try Wispr Flow if it has a Linux build when I check, else SKIP and I type. | Windows: download from https://willowvoice.com (Students page: https://willowvoice.com/students for the student plan). Install, open, allow Microphone and Input/typing permissions, learn the hotkey it shows. Test: tell me to dictate one sentence into this terminal. |
 | 10 | Granola (records classes) | Windows: **Granola**. Linux: none, SKIP. | Decided in Phase 7, not here. Just note it in the log as "pending Phase 7". |
@@ -51,10 +64,9 @@ bash ~/claude-starter/install.sh
 Then read ~/claude-starter/SETUP.md yourself so you know what is in the pack, and show me the list of what got installed: CLAUDE.md, 5 skills (study-drill, essay-rubric, bpa-judge, canvas-week, council), 2 hooks (notes index, command guard), bypass permissions default, ~/school/Notes.
 Check: `ls ~/.claude/skills` shows the 5 skills and ~/.claude/CLAUDE.md exists. Tell me the hooks only turn on after a restart and that we restart in the last phase.
 
-## Phase 4: Claude desktop app sign in
+## Phase 4: Claude desktop app check
 
-If Phase 2 installed it: tell me to open it, sign in with my personal Claude account, and where Settings is. This is where chat, Projects, and connectors live. If it was skipped on Linux: tell me to sign in at https://claude.ai in Chrome instead.
-Check: I type "done". Log it.
+I already use it. Tell me where Settings and Connectors are in it (we need them in Phase 6) and confirm the account matches. Log PASS.
 
 ## Phase 5: Claude in Chrome
 
@@ -112,4 +124,4 @@ Explain in 3 lines: starting a message with `#` tells you to remember something 
    "Read the notes index above and CLAUDE.md. Run /canvas-week. Then tell me the 3 things you would do for me first this week, and start on the first one."
 4. If anything is FAIL in the log, give me a one line fix for each I can try tomorrow, and say "text Aarush" for anything you could not solve.
 
-That is the whole session. Start with Phase 1 now.
+That is the whole session. Start now: try the shell command, then Phase 0 or Phase 1.

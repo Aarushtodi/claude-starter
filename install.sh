@@ -56,6 +56,8 @@ for event, entries in new["hooks"].items():
 # status line, model effort defaults, skill list: add only what is missing, never replace his choices
 cur.setdefault("statusLine", new["statusLine"])
 for k in ("modelSettings", "skillOverrides"):
+    if k not in new:
+        continue
     d = cur.setdefault(k, {})
     for name, val in new[k].items():
         d.setdefault(name, val)

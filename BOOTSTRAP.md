@@ -29,6 +29,7 @@ Say that is all for this chat, and that everything else happens in Claude Code. 
 - Inside a phase: do your part first, then tell me my part as numbered clicks ("Open X. Click Y. Pick Z."), then run a check to prove it worked. Do not move on until the check passes or I say skip.
 - When something is on me, end your message with exactly what to type back: usually "done" or "skip".
 - If a check fails twice, do not loop. Write the failure to the log and move on. We fix it at the end.
+- **Save to the vault.** My vault is ~/school (Obsidian). Every decision, deadline, or thing I tell you that matters goes into the matching note in ~/school/Projects (or the class note in ~/school/Notes) as a dated line, in the same step: add the line, rewrite that note's `## Current state` block, and set `updated:` in its frontmatter to today. During the chat, not at the end. If you are unsure where it goes, append `- [date] text` to ~/school/Projects/Inbox.md. Anything I am waiting on goes in Projects/Blockers.md. Before your last reply, confirm the note was written.
 - Keep a log at ~/school/SETUP_LOG.md: one line per phase and per app, PASS / SKIP / FAIL, plus anything to fix later. Create it in Phase 1.
 - Short messages. I am reading this in a terminal.
 - I am on Pro. Do not spawn subagents. Do not read files you do not need. If this chat gets long, tell me to run /compact.
@@ -59,14 +60,22 @@ This is the full list of apps Aarush runs with Claude on his Mac and what I get 
 | 5 | Google Chrome | Google Chrome | Windows: `winget install --id Google.Chrome -e`. Linux: download the .deb/.rpm from https://www.google.com/chrome and install it. |
 | 6 | Ghostty (terminal) | Windows: **Windows Terminal** (Ghostty has no Windows build, only an unofficial fork, skip it). Linux: **Ghostty**. | Windows: `winget install --id Microsoft.WindowsTerminal -e`, then tell me: Settings > Startup > Default profile = Git Bash (or Ubuntu if WSL) and Default terminal application = Windows Terminal. Linux: follow https://ghostty.org/docs/install for my distro. |
 | 7 | Claude desktop app | Claude desktop app | I already have it (that is where I started). Just confirm it is signed in with the same account as Claude Code and log PASS. If it is somehow missing: Windows `winget install --id Anthropic.Claude -e` or https://claude.ai/download; Linux beta via https://code.claude.com/docs/en/desktop-linux (Ubuntu 22.04+ / Debian 12+ only, else SKIP). |
-| 8 | Obsidian | Obsidian | Windows: `winget install --id Obsidian.Obsidian -e`. Linux: snap `sudo snap install obsidian --classic`, or the AppImage/.deb from https://obsidian.md/download. Then tell me: open Obsidian > Open folder as vault > pick `~/school/Notes`. That folder is where you write my notes, so I can read them there. |
+| 8 | Obsidian | Obsidian | Windows: `winget install --id Obsidian.Obsidian -e`. Linux: snap `sudo snap install obsidian --classic`, or the AppImage/.deb from https://obsidian.md/download. Then do the Obsidian steps below (the vault is `~/school`, the whole folder, not a subfolder). |
 | 9 | Willow Voice (dictation, Aarush talks to Claude instead of typing) | Windows: **Willow Voice** (it has an official Windows app). Linux: no Willow; try Wispr Flow if it has a Linux build when I check, else SKIP and I type. | Windows: download from https://willowvoice.com (Students page: https://willowvoice.com/students for the student plan). Install, open, allow Microphone and Input/typing permissions, learn the hotkey it shows, and set it to start at login (Windows: Settings > Apps > Startup > Willow Voice on). Test: tell me to dictate one sentence into this terminal. |
 | 10 | Granola (records classes) | Windows: **Granola**. Linux: none, SKIP. | Decided in Phase 7, not here. Just note it in the log as "pending Phase 7". |
 | 11 | Grammarly | Windows: Grammarly desktop. Linux: the Grammarly Chrome extension only. | Optional. Windows: `winget install --id Grammarly.Grammarly -e`; if not found, https://www.grammarly.com/desktop/windows. Ask me yes/no first; skip if I say no. |
 | 12 | Ollama (local models) | Ollama | Optional and only if the ThinkPad has 16 GB RAM or more (check first). Windows: `winget install --id Ollama.Ollama -e`. Linux: `curl -fsSL https://ollama.com/install.sh | sh`. If RAM is under 16 GB, SKIP and say why. |
 
+Obsidian steps (after it installs; the vault skeleton comes from Phase 3, so if `~/school/Home.md` is not there yet, do these right after Phase 3). Numbered clicks for me:
+1. Open Obsidian. Click **Open folder as vault**, pick the `school` folder in my home folder, click **Open**. If it asks "Trust author", click **Trust author and enable plugins**.
+2. Click the gear icon at the bottom left (Settings). Click **Community plugins**. Click **Turn on community plugins** and confirm.
+3. Click **Browse**. Type `Dataview`. Click the one called **Dataview** (by Michael Brenan). Click **Install**.
+4. Click **Enable** when the button changes. Close Settings.
+5. In the left file list, click **Home**. I should see tables (Active projects, Weak topics, Open tasks), not code. Take a screenshot and show you.
+Type "done" or "skip". Your part: if the tables show as code, Dataview is not enabled; walk me back through step 4 from a screenshot. Log it.
+
 Rules for this phase: one app per message, run the command, show me the result, then the next. Do not install anything not on this list. If winget asks me to accept terms, tell me what to type. Restart the terminal at the end of this phase if PATH changed (tell me to type `exit`, reopen, run `claude --resume` and pick this session, then "continue phase 3").
-Check: `git --version`, `python3 --version`, `node --version`, `gh --version` all print, Chrome and Obsidian open, Willow Voice dictated one sentence. Log it.
+Check: `git --version`, `python3 --version`, `node --version`, `gh --version` all print, Chrome opens, Obsidian opens ~/school as a vault with Dataview on, Willow Voice dictated one sentence. Log it.
 
 ## Phase 3: Starter pack (rules, skills, hooks)
 
@@ -75,8 +84,8 @@ Your part: run
 git clone https://github.com/Aarushtodi/claude-starter.git ~/claude-starter
 bash ~/claude-starter/install.sh
 ```
-Then read ~/claude-starter/SETUP.md yourself so you know what is in the pack, and show me the list of what got installed: CLAUDE.md, 5 skills (study-drill, essay-rubric, bpa-judge, canvas-week, council), 2 hooks (notes index, command guard), bypass permissions default, ~/school/Notes.
-Check: `ls ~/.claude/skills` shows the 5 skills, ~/.claude/CLAUDE.md exists, and ~/.claude/settings.json contains `"defaultMode": "bypassPermissions"` (so bypass survives restarts). Tell me the hooks only turn on after a restart and that we restart in the last phase. The third hook warns us when this chat gets long enough to drain my Pro limit; when it fires, save state to the notes, then /compact or /clear.
+Then read ~/claude-starter/SETUP.md yourself so you know what is in the pack, and show me the list of what got installed: CLAUDE.md, 5 skills (study-drill, essay-rubric, bpa-judge, canvas-week, council), 5 hooks (notes index, project index, note drift check, command guard, context size warning), bypass permissions default, and the vault skeleton in ~/school: Home.md, Start Here.md, Projects/ (Inbox, Blockers, Miscellaneous Notes, BPA), Notes/, Classes/, Daily/, Drafts/, Council/, Templates/, and the .obsidian settings. Existing files are never overwritten. Tell me ~/school is my Obsidian vault and Claude saves into it as we go.
+Check: `ls ~/.claude/skills` shows the 5 skills, `ls ~/school` shows Home.md, Start Here.md and the folders, ~/.claude/CLAUDE.md exists, and ~/.claude/settings.json contains `"defaultMode": "bypassPermissions"` (so bypass survives restarts). Tell me the hooks only turn on after a restart and that we restart in the last phase. The project index and note drift hooks show you every active project and flag stale notes at the start of each session. The context size hook warns us when this chat gets long enough to drain my Pro limit; when it fires, save state to the vault, then /compact or /clear.
 
 ## Phase 4: Claude desktop app check
 
@@ -124,8 +133,15 @@ Check: type `/` and confirm the new skills show in the list.
 
 Read ~/.claude/CLAUDE.md. The ABOUT ME section has blanks. Interview me, one question at a time, 8 to 12 questions, until the blanks are filled: my 8 classes with teacher names and A/B period, which classes have tests soon, my BPA team (who, roles, next deadline), how I study best, when I usually do homework, which Chrome profile has the school account, whether I dictate with Willow or type, whether I want short answers or detailed ones, my goals for this semester, and anything you must never do. Stop when my answers stop changing what you would write.
 Then: rewrite ABOUT ME with what you learned. Show me the full new section. I say "save", you save it with Edit (not by overwriting the file).
-Then: create one note per class in ~/school/Notes/<Class>.md plus BPA.md, each with `## Current state` and `## Log` headings and whatever I told you. Show me `ls ~/school/Notes` and tell me to look at them in Obsidian.
-Check: CLAUDE.md has no blanks left in ABOUT ME. Log it.
+Then build the vault from my answers (the skeleton from Phase 3 is already in ~/school; read ~/school/Start Here.md so you know the schema):
+1. Pick a short class code for each class (for example APUSH, Stats, PreCalc, APES, APLang, Psych) and tell me the list.
+2. For each class, copy `~/school/Classes/_Class Hub Template.md` to `~/school/Classes/<Class name>.md` and replace every placeholder: CLASSCODE, CLASSNAME, TEACHER, PERIOD. Leave the files in Templates/ as they are; `class:` gets set when a note is made from them.
+3. For each class, create the class note `~/school/Notes/<Class name>.md` with frontmatter (`class: <code>`, `type: class-notes`), then `## Current state` and `## Log` with whatever I told you. The skills read these paths, so keep them exactly.
+4. Fill in ~/school/Projects/BPA.md from the interview: team, roles, next deadline, in Current state and Team and roles. Set its `updated:` to today.
+5. In ~/school/Home.md replace the Goal line with my goal and the Classes line with a link to each hub, like `[[Classes/APUSH]]`.
+6. Put each test or deadline I mentioned in a note from the Assessment template in ~/school/Notes (`class:` set, `status: upcoming`, `date:`), so it shows on Home.
+Show me `ls ~/school/Classes ~/school/Notes ~/school/Projects`. Then tell me, numbered: 1. Open Obsidian. 2. Click Home in the file list. 3. Scroll through Active projects and Classes. Type "done" when the tables show my stuff.
+Check: CLAUDE.md has no blanks left in ABOUT ME, and Home.md shows my classes and BPA. Log it.
 
 ## Phase 10: Memory
 

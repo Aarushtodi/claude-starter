@@ -25,7 +25,7 @@ Claude reads this at the start of every session. Keep it current. Propose the ex
 ## Always
 
 - Short. Answer first, then the plan, in a skimmable list. One item at a time when there are steps.
-- Don't guess. Look it up first: my notes in ~/school/Notes, Canvas through Chrome, my Google Calendar and Drive. Ask only after you checked.
+- Don't guess. Look it up first: my vault in ~/school (Projects, Notes), Canvas through Chrome, my Google Calendar and Drive. Ask only after you checked.
 - Don't say done unless you looked at the actual result the way I would see it. A rendered doc, a run that passed, the page actually loaded. Not logs.
 - Report failures and skipped steps as they are. Never round "mostly works" up to "done".
 - Do it yourself and report. Ask only for real blockers: a login you cannot do, money, something physical, or a send that has not been approved.
@@ -40,11 +40,11 @@ Claude reads this at the start of every session. Keep it current. Propose the ex
 - Tests: when you see a test date anywhere (Canvas, teacher email, me mentioning it), put it on my Google Calendar as `TEST: <class> <topic>` and add a study block two days before.
 - Teacher emails: formal, short, one ask per email, always show me the exact text before sending. Read the existing thread first so you do not repeat something I already said.
 - Google Docs that are locked to the school account: I download the PDF or paste the text to you. You never sign the school account into anything Claude.
-- Save every class note, cheat sheet, or plan into ~/school/Notes/<Class>.md with the date. Update the Current state block at the top of that note in the same step.
+- My vault is ~/school (open in Obsidian). Class notes, cheat sheets and plans go into ~/school/Notes/<Class>.md with the date; update that note's Current state block in the same step. Class hubs are in ~/school/Classes, concept notes are one idea each in ~/school/Notes with `class:`, `unit:`, `status:` (weak, learning, solid) and `type: concept` frontmatter.
 
 ## BPA (505 Sports Media Marketing Team)
 
-- Note lives at ~/school/Notes/BPA.md. Read it before any BPA work.
+- Note lives at ~/school/Projects/BPA.md. Read it before any BPA work.
 - Real deadlines and event rules come from the official BPA Workplace Skills Assessment Program guide, never from memory. Check the current year guide before quoting a rule.
 - AI is allowed in this event WITH citation. Every AI assisted piece gets logged in the note so the AI Usage form is easy to fill.
 - Help me build: team plan, research, slide design (Canva), the numbers behind the pitch, practice Q&A. For the Q&A, drill me like a judge until I can answer without notes.
@@ -77,7 +77,8 @@ Claude reads this at the start of every session. Keep it current. Propose the ex
 - One task per session. Tell me when a chat is getting long and suggest /clear or /compact.
 - Pick the model for the job and say so in one line: Sonnet for normal school work, Opus only for hard essays, BPA strategy, or something that is broken. I am on Pro, so usage is a real limit.
 - No subagents unless the job is genuinely big (reading 20+ files, a multi part research dive). Say when you spawn one and why.
-- Every decision, deadline, or thing I tell you that matters goes into the matching note in ~/school/Notes/ as it happens, not at the end. If nothing fits, append a dated line to ~/school/Notes/Inbox.md.
+- Save to the vault: every decision, deadline, or thing I tell you that matters goes into the matching note as it happens, not at the end. Projects (BPA and anything else I am working on) are in ~/school/Projects, class notes in ~/school/Notes. Each save is one step: add a dated line, rewrite that note's `## Current state` block, set `updated:` in its frontmatter to today. Unsure where it goes: append `- [date] text` to ~/school/Projects/Inbox.md. Anything I am waiting on goes in ~/school/Projects/Blockers.md.
+- Project notes use this frontmatter: `type: project`, `status: active|waiting|done|archived`, `domain: school`, `updated: YYYY-MM-DD`.
 - If I call out a wrong answer: fix the thing that let it through, not just the one symptom, and add a line here so it does not repeat.
 - If I am polishing a plan instead of doing the step (asking a teacher, texting a teammate), say so plainly.
 

@@ -80,9 +80,9 @@ What that installs:
   - `/bpa-judge` builds the 505 plan with you or mock judges you with hard follow ups
   - `/canvas-week` reads Canvas through Chrome, lists what is due, puts tests on your calendar
   - `/council` six advisor debate for real decisions (heavy on usage, use `quick` mode)
-- 2 hooks: a notes index that loads at session start so Claude knows where every class stands, and a guard that blocks `rm -rf`, force pushes, and other wipes even in bypass mode.
+- 5 hooks: a notes index, a project index and a note drift check that load at session start so Claude knows where every class and project stands, a context size warning, and a guard that blocks `rm -rf`, force pushes, and other wipes even in bypass mode.
 - Bypass permissions set as the default (so plain `claude` works, no flag needed).
-- `~/school/Notes/` with starter notes.
+- `~/school/` as an Obsidian vault: Home.md and Start Here.md, Projects/ (BPA, Inbox, Blockers, Miscellaneous Notes), Notes/, Classes/, Daily/, Drafts/, Council/, Templates/, plus two more SessionStart hooks (project index, note drift).
 
 Re-running `install.sh` is safe: it never overwrites a filled in CLAUDE.md.
 
@@ -100,7 +100,7 @@ mkdir ~/school && cd ~/school
 Run `cc` (or `claude --dangerously-skip-permissions`) and paste this as your first message:
 
 ```
-Read your CLAUDE.md. Then interview me with 8 to 10 questions, one at a time, to fill in whatever is still blank or vague about my classes, teachers, BPA, and how I like to work. After the interview, rewrite the ABOUT ME section of CLAUDE.md with what you learned, show me the diff, and save it. Then make ~/school/Notes/ with one markdown note per class and one for BPA, each with a Current state block at the top. Finish by telling me the 3 things you would do for me first.
+Read your CLAUDE.md. Then interview me with 8 to 10 questions, one at a time, to fill in whatever is still blank or vague about my classes, teachers, BPA, and how I like to work. After the interview, rewrite the ABOUT ME section of CLAUDE.md with what you learned, show me the diff, and save it. Then make one hub per class in ~/school/Classes from the hub template, one class note per class in ~/school/Notes, and fill in ~/school/Projects/BPA.md, each with a Current state block. Finish by telling me the 3 things you would do for me first.
 ```
 
 ## 7. Pro plan reality

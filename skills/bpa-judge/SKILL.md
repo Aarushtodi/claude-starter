@@ -7,12 +7,12 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash, WebSearch, WebFetch, AskUser
 # BPA judge
 
 ## Rules of the room
-- Rules and rubric come from the current year BPA Workplace Skills Assessment Program guide for event 505 and the Texas BPA site. Fetch it, do not quote from memory. Save the rubric text into `~/school/Notes/BPA.md` under `## Rubric` the first time.
+- Rules and rubric come from the current year BPA Workplace Skills Assessment Program guide for event 505 and the Texas BPA site. Fetch it, do not quote from memory. Save the rubric text into `~/school/Projects/BPA.md` under `## Rubric` the first time.
 - AI is allowed in this event with citation. Log every AI assisted piece (what, when, how it was used) under `## AI usage log` in the note so the AI Usage form takes 2 minutes.
 - Judges Q&A is live and he cannot use notes. Everything in the deck must be something he can defend out loud.
 
 ## Mode A: build
-- Read `~/school/Notes/BPA.md` first. Team members, roles, deadlines, decisions already made.
+- Read `~/school/Projects/BPA.md` first. Team members, roles, deadlines, decisions already made.
 - Work rubric line by rubric line. For each line: what the judges want to see, what the team has, the gap.
 - Numbers (budget, reach, engagement, pricing): show the math in the note, cite the source, and make him explain it back once before it goes on a slide.
 - Slides are built in Canva by the team. Claude writes the slide outline, the speaker notes, and the design brief (what goes where, one idea per slide), not the Canva file.

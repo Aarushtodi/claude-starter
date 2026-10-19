@@ -7,7 +7,7 @@ HERE="$(cd "$(dirname "$0")" && pwd)"
 CL="$HOME/.claude"
 
 echo "==> Installing into $CL"
-mkdir -p "$CL/skills" "$CL/hooks" "$HOME/school/Notes/drills" "$HOME/school/Council" "$HOME/school/Writing"
+mkdir -p "$CL/skills" "$CL/hooks" "$HOME/school/Notes/drills" "$HOME/school/Writing"
 
 # 1. CLAUDE.md (never overwrite a filled in one)
 if [ -f "$CL/CLAUDE.md" ]; then
@@ -29,7 +29,7 @@ done
 # 3. Hooks
 cp "$HERE"/hooks/*.sh "$HERE"/hooks/*.py "$CL/hooks/"; mkdir -p "$CL/state"
 chmod +x "$CL"/hooks/*.sh "$CL"/hooks/*.py 2>/dev/null || true
-echo "    hooks: notes_index.sh, guard.py, context_size_check.py"
+echo "    hooks: notes_index.sh, project_index.sh, note_drift.py, guard.py, context_size_check.py"
 
 # 4. settings.json: merge hooks in, keep whatever is already there
 python3 - "$CL/settings.json" "$HERE/settings.json" <<'EOF'
@@ -55,16 +55,28 @@ json.dump(cur, open(dst, "w"), indent=2)
 print("    settings.json merged (hooks + bypass permissions default)")
 EOF
 
-# 5. Starter notes
-for n in BPA Inbox Week; do
-  f="$HOME/school/Notes/$n.md"
-  [ -f "$f" ] || printf '# %s\n\n## Current state\n(nothing yet)\n\n## Log\n' "$n" > "$f"
-done
-echo "    notes folder: ~/school/Notes (BPA.md, Inbox.md, Week.md)"
+# 5. Vault skeleton: copy vault/ into ~/school, never overwrite an existing file
+added=0; kept=0
+cd "$HERE/vault"
+while IFS= read -r p; do
+  mkdir -p "$HOME/school/$(dirname "$p")"
+  if [ -e "$HOME/school/$p" ]; then
+    kept=$((kept+1))
+  else
+    # stamp new notes with today's date so the staleness check starts clean
+    sed "s/^updated: 2026-01-01/updated: $(date +%Y-%m-%d)/" "$p" > "$HOME/school/$p"; added=$((added+1))
+  fi
+done < <(find . -type f | sed 's|^\./||')
+cd "$HERE"
+mkdir -p "$HOME/school"/{Projects,Notes,Classes,Daily,Drafts,Council,Templates}
+[ -f "$HOME/school/Notes/Week.md" ] || printf '# Week\n\n## Current state\n(nothing yet)\n\n## Log\n' > "$HOME/school/Notes/Week.md"
+echo "    vault: ~/school is the Obsidian vault ($added files added, $kept already there and left alone)"
+echo "    folders: Projects, Notes, Classes, Daily, Drafts, Council, Templates, .obsidian"
 
 echo
 echo "==> Done. Next:"
 echo "    1. Edit ~/.claude/CLAUDE.md, fill in ABOUT ME."
 echo "    2. cd ~/school && claude"
-echo "    3. Type /plugin, pick Discover, install the Anthropic skills pack (docs, pdf, pptx, xlsx) and anything else that looks useful."
-echo "    4. Paste the first message from SETUP.md section 6."
+echo "    3. Open Obsidian > Open folder as vault > ~/school, then install Dataview (see ~/school/Start Here.md)."
+echo "    4. Type /plugin, pick Discover, install the Anthropic skills pack (docs, pdf, pptx, xlsx) and anything else that looks useful."
+echo "    5. Paste the first message from SETUP.md section 6."

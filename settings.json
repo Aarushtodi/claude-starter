@@ -8,6 +8,18 @@
             "command": "bash \"$HOME/.claude/hooks/notes_index.sh\" 2>/dev/null || true",
             "timeout": 10,
             "statusMessage": "Loading notes index..."
+          },
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/project_index.sh\" 2>/dev/null || true",
+            "timeout": 10,
+            "statusMessage": "Loading project index..."
+          },
+          {
+            "type": "command",
+            "command": "python3 \"$HOME/.claude/hooks/note_drift.py\" 2>/dev/null || true",
+            "timeout": 10,
+            "statusMessage": "Checking note drift..."
           }
         ]
       }

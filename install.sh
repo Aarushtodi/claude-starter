@@ -27,9 +27,9 @@ for s in "$HERE"/skills/*/; do
 done
 
 # 3. Hooks
-cp "$HERE"/hooks/*.sh "$HERE"/hooks/*.py "$CL/hooks/"
+cp "$HERE"/hooks/*.sh "$HERE"/hooks/*.py "$CL/hooks/"; mkdir -p "$CL/state"
 chmod +x "$CL"/hooks/*.sh "$CL"/hooks/*.py 2>/dev/null || true
-echo "    hooks: notes_index.sh, guard.py"
+echo "    hooks: notes_index.sh, guard.py, context_size_check.py"
 
 # 4. settings.json: merge hooks in, keep whatever is already there
 python3 - "$CL/settings.json" "$HERE/settings.json" <<'EOF'

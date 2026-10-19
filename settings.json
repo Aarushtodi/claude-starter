@@ -23,6 +23,17 @@
           }
         ]
       }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$HOME/.claude/hooks/context_size_check.py\"",
+            "timeout": 5
+          }
+        ]
+      }
     ]
   }
 }

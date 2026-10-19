@@ -33,6 +33,9 @@ Say that is all for this chat, and that everything else happens in Claude Code. 
 - Short messages. I am reading this in a terminal.
 - I am on Pro. Do not spawn subagents. Do not read files you do not need. If this chat gets long, tell me to run /compact.
 - Never run anything that deletes, force pushes, or wipes. Never sign my school Google account into anything Claude. School account lives in Chrome only. Personal Gmail is my Claude login.
+- Bypass permissions means you can run, edit and send without asking. So: never send anything to anyone (email, text, form, post) without showing me the exact wording and hearing "send it". That rule is permanent.
+- Before you edit any config file that already exists (settings.json, CLAUDE.md, .bashrc, a PowerShell profile), copy it to `<name>.bak` first and merge into it. Never overwrite.
+- Browsing is Claude in Chrome only. Do not install a Playwright or browser MCP; it slows everything down.
 
 ## Phase 1: Environment
 
@@ -54,7 +57,7 @@ This is the full list of apps Aarush runs with Claude on his Mac and what I get 
 | 6 | Ghostty (terminal) | Windows: **Windows Terminal** (Ghostty has no Windows build, only an unofficial fork, skip it). Linux: **Ghostty**. | Windows: `winget install --id Microsoft.WindowsTerminal -e`, then tell me: Settings > Startup > Default profile = Git Bash (or Ubuntu if WSL) and Default terminal application = Windows Terminal. Linux: follow https://ghostty.org/docs/install for my distro. |
 | 7 | Claude desktop app | Claude desktop app | I already have it (that is where I started). Just confirm it is signed in with the same account as Claude Code and log PASS. If it is somehow missing: Windows `winget install --id Anthropic.Claude -e` or https://claude.ai/download; Linux beta via https://code.claude.com/docs/en/desktop-linux (Ubuntu 22.04+ / Debian 12+ only, else SKIP). |
 | 8 | Obsidian | Obsidian | Windows: `winget install --id Obsidian.Obsidian -e`. Linux: snap `sudo snap install obsidian --classic`, or the AppImage/.deb from https://obsidian.md/download. Then tell me: open Obsidian > Open folder as vault > pick `~/school/Notes`. That folder is where you write my notes, so I can read them there. |
-| 9 | Willow Voice (dictation, Aarush talks to Claude instead of typing) | Windows: **Willow Voice** (it has an official Windows app). Linux: no Willow; try Wispr Flow if it has a Linux build when I check, else SKIP and I type. | Windows: download from https://willowvoice.com (Students page: https://willowvoice.com/students for the student plan). Install, open, allow Microphone and Input/typing permissions, learn the hotkey it shows. Test: tell me to dictate one sentence into this terminal. |
+| 9 | Willow Voice (dictation, Aarush talks to Claude instead of typing) | Windows: **Willow Voice** (it has an official Windows app). Linux: no Willow; try Wispr Flow if it has a Linux build when I check, else SKIP and I type. | Windows: download from https://willowvoice.com (Students page: https://willowvoice.com/students for the student plan). Install, open, allow Microphone and Input/typing permissions, learn the hotkey it shows, and set it to start at login (Windows: Settings > Apps > Startup > Willow Voice on). Test: tell me to dictate one sentence into this terminal. |
 | 10 | Granola (records classes) | Windows: **Granola**. Linux: none, SKIP. | Decided in Phase 7, not here. Just note it in the log as "pending Phase 7". |
 | 11 | Grammarly | Windows: Grammarly desktop. Linux: the Grammarly Chrome extension only. | Optional. Windows: `winget install --id Grammarly.Grammarly -e`; if not found, https://www.grammarly.com/desktop/windows. Ask me yes/no first; skip if I say no. |
 | 12 | Ollama (local models) | Ollama | Optional and only if the ThinkPad has 16 GB RAM or more (check first). Windows: `winget install --id Ollama.Ollama -e`. Linux: `curl -fsSL https://ollama.com/install.sh | sh`. If RAM is under 16 GB, SKIP and say why. |
@@ -70,7 +73,7 @@ git clone https://github.com/Aarushtodi/claude-starter.git ~/claude-starter
 bash ~/claude-starter/install.sh
 ```
 Then read ~/claude-starter/SETUP.md yourself so you know what is in the pack, and show me the list of what got installed: CLAUDE.md, 5 skills (study-drill, essay-rubric, bpa-judge, canvas-week, council), 2 hooks (notes index, command guard), bypass permissions default, ~/school/Notes.
-Check: `ls ~/.claude/skills` shows the 5 skills and ~/.claude/CLAUDE.md exists. Tell me the hooks only turn on after a restart and that we restart in the last phase.
+Check: `ls ~/.claude/skills` shows the 5 skills, ~/.claude/CLAUDE.md exists, and ~/.claude/settings.json contains `"defaultMode": "bypassPermissions"` (so bypass survives restarts). Tell me the hooks only turn on after a restart and that we restart in the last phase. The third hook warns us when this chat gets long enough to drain my Pro limit; when it fires, save state to the notes, then /compact or /clear.
 
 ## Phase 4: Claude desktop app check
 
@@ -82,6 +85,7 @@ My part, numbered:
 1. Open Chrome. My personal Google account is the Chrome profile I use for Claude. My school Google account is also signed into Chrome (for Canvas and school Docs), either in the same profile or a second one. Ask me which and remember it for CLAUDE.md.
 2. Install the "Claude" extension by Anthropic from the Chrome Web Store. Sign in to it with my personal Claude account.
 3. Pin it to the toolbar.
+4. Chrome menu > Settings > Performance > Memory Saver on. Claude opens tabs; this keeps the laptop from choking.
 Your part: after "done", tell me to type `/chrome` in this chat and turn it on.
 Check: open a new tab to https://friscoisd.instructure.com and tell me what is on my Canvas dashboard. Close the tab after. If the extension is not connected, tell me how to reconnect it. Log it.
 
@@ -115,7 +119,7 @@ Check: type `/` and confirm the new skills show in the list.
 
 ## Phase 9: Interview and CLAUDE.md
 
-Read ~/.claude/CLAUDE.md. The ABOUT ME section has blanks. Interview me, one question at a time, 8 to 12 questions, until the blanks are filled: my 8 classes with teacher names and A/B period, which classes have tests soon, my BPA team (who, roles, next deadline), how I study best, when I usually do homework, which Chrome profile has the school account, whether I dictate with Willow or type, anything you must never do. Stop when my answers stop changing what you would write.
+Read ~/.claude/CLAUDE.md. The ABOUT ME section has blanks. Interview me, one question at a time, 8 to 12 questions, until the blanks are filled: my 8 classes with teacher names and A/B period, which classes have tests soon, my BPA team (who, roles, next deadline), how I study best, when I usually do homework, which Chrome profile has the school account, whether I dictate with Willow or type, whether I want short answers or detailed ones, my goals for this semester, and anything you must never do. Stop when my answers stop changing what you would write.
 Then: rewrite ABOUT ME with what you learned. Show me the full new section. I say "save", you save it with Edit (not by overwriting the file).
 Then: create one note per class in ~/school/Notes/<Class>.md plus BPA.md, each with `## Current state` and `## Log` headings and whatever I told you. Show me `ls ~/school/Notes` and tell me to look at them in Obsidian.
 Check: CLAUDE.md has no blanks left in ABOUT ME. Log it.
@@ -127,9 +131,10 @@ Explain in 3 lines: starting a message with `#` tells you to remember something 
 ## Phase 11: Restart and first real job
 
 1. Show me SETUP_LOG.md with every PASS / SKIP / FAIL, apps included.
-2. Tell me to type `/exit`, open my terminal (Windows Terminal or Ghostty), `cd ~/school`, and run `claude`. Hooks turn on now.
-3. Tell me the first message to paste in the new session, exactly this:
+2. Before we restart, one quick win: based on the interview, offer me 3 small demos (for example: drill me 5 questions on my next test, put my next test on my calendar, draft an email to a teacher and show it to me without sending). I pick one, you do it now.
+3. Tell me to type `/exit`, open my terminal (Windows Terminal or Ghostty), `cd ~/school`, and run `claude`. Hooks turn on now.
+4. Tell me the first message to paste in the new session, exactly this:
    "Read the notes index above and CLAUDE.md. Run /canvas-week. Then tell me the 3 things you would do for me first this week, and start on the first one."
-4. If anything is FAIL in the log, give me a one line fix for each I can try tomorrow, and say "text Aarush" for anything you could not solve.
+5. If anything is FAIL in the log, give me a one line fix for each I can try tomorrow, and say "text Aarush" for anything you could not solve.
 
 That is the whole session. Start now: try the shell command, then Phase 0 or Phase 1.

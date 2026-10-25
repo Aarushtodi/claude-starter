@@ -1,7 +1,7 @@
 # Calendar (for Srijan, plain Claude app, Pro plan)
 
 Setup, one time, about 5 minutes:
-1. In the Claude app: Settings, Connectors, turn on Google Calendar. Sign in with your personal Gmail (srijanvegesna2010), not the k12 one.
+1. In the Claude app: Settings, Connectors, turn on Google Calendar. Sign in with the personal Gmail you use every day (the one your calendar is on), not the k12 one.
 2. In Google Calendar on the web: make a new calendar called "School". Then Settings, School calendar, Event notifications: add "30 minutes before". For All day events add "1 day before at 7pm". Do the same on your main calendar. Google does the reminding for free, so Claude never has to run just to remind you.
 3. Make a Project in the Claude app called "Calendar". Fill in MY CLASSES below, then paste everything under the line into its instructions.
 4. Pick Sonnet, not Opus. Start a new chat in the Project every time. Long chats burn your Pro limit fast.
